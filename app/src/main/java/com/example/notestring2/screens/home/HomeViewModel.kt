@@ -9,7 +9,7 @@ class HomeViewModel(private val navController: NavController, private val homeMo
     private var _list: MutableLiveData<List<ExpenseEntity>> = MutableLiveData(listOf())
     var list: LiveData<List<ExpenseEntity>> = _list
 
-    fun loadList() {
+    fun getFullList() {
         _list.value = homeModel.getAllExpense()
     }
 
@@ -20,7 +20,7 @@ class HomeViewModel(private val navController: NavController, private val homeMo
 
     fun delete(expenseEntity: ExpenseEntity) {
         homeModel.onDelete(expenseEntity)
-        loadList()
+        getFullList()
     }
 
     fun onUpdate(expenseEntity: ExpenseEntity) {

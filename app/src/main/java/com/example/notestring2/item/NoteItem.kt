@@ -2,6 +2,7 @@ package com.example.notestring.item
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,12 +31,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.notestring2.database.ExpenseEntity
-import com.example.notestring2.ui.theme.Primary
 import com.example.notestring2.ui.theme.primaryColor
 
 @Composable
-fun ExpenseItem(
+fun NoteItem(
     expense: ExpenseEntity,
     onDelete: (expense: ExpenseEntity) -> Unit,
     onUpdate: (id:Int) -> Unit,
@@ -53,7 +54,10 @@ fun ExpenseItem(
             modifier = Modifier.fillMaxSize().weight(0.8f)
                 .border(
                     BorderStroke(1.dp, Gray),
-                    shape = RoundedCornerShape(12.dp),).padding(top = 10.dp, bottom = 10.dp)
+                    shape = RoundedCornerShape(12.dp)).clickable {
+                    onUpdate(expense.id)
+
+                }.padding(top = 10.dp, bottom = 10.dp)
             , verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

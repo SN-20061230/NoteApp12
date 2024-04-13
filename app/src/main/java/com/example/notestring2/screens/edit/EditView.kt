@@ -81,7 +81,7 @@ fun EditView(vm: EditViewModel, navController: NavController) {
             )
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedTextField(
-                modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
+                modifier = Modifier.fillMaxWidth().padding(start = 5.dp, end = 5.dp,top = 10.dp),
                 value = if (amount1 == "") "" else amount1,
                 onValueChange = {vm.updateAmount(it) },
                 placeholder = { Text(text = "Izohni kiriting", color = Gray) },

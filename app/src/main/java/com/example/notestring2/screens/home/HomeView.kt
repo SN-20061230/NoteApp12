@@ -31,15 +31,15 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.example.notestring.item.ExpenseItem
+import com.example.notestring.item.NoteItem
 import com.example.notestring2.ui.theme.primaryColor
 import com.example.notestring2.ui.theme.primarybackground
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeView(vm : HomeViewModel, navController: NavController) {
-    vm.loadList()
-    val list = vm.list.observeAsState().value
+fun HomeView(viewModel: HomeViewModel, navController: NavController) {
+    viewModel.getFullList()
+    val list = viewModel.list.observeAsState().value
 
     Column(Modifier.fillMaxSize().background(primarybackground)) {
         CenterAlignedTopAppBar(title = { Text(text = "Bosh Sahifa", fontWeight = FontWeight.SemiBold) })
@@ -50,11 +50,11 @@ fun HomeView(vm : HomeViewModel, navController: NavController) {
             LazyColumn (
                 Modifier.padding(start = 10.dp, end = 4.dp)){
                 items(list.size) {index->
-                    ExpenseItem(
+                    NoteItem(
                         expense = list[index],
-                        onDelete = {vm.delete(list[index])
+                        onDelete = {viewModel.delete(list[index])
                         },
-                        onUpdate = {vm.onUpdate(list[index])}
+                        onUpdate = {viewModel.onUpdate(list[index])}
                     )
                 }
             }
@@ -68,11 +68,11 @@ fun HomeView(vm : HomeViewModel, navController: NavController) {
             Modifier
                 .padding(20.dp)
                 .align(Alignment.BottomEnd)){
-            FloatingActionButton(onClick = {vm.onAdd() }, containerColor = primaryColor) {
+            FloatingActionButton(onClick = {viewModel.onAdd() }, containerColor = primaryColor) {
                 Row(Modifier.padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Rounded.Add, contentDescription = "", tint = Color.White)
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = "Qo'shish", color = Color.White)
+                    Text(text = "Yangi Izoh", color = Color.White)
                 }
             }
         }
