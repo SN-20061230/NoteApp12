@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.notestring2.database.ExpenseEntity
 import com.example.notestring2.ui.theme.Primary
+import com.example.notestring2.ui.theme.primaryColor
 
 @Composable
 fun ExpenseItem(
@@ -35,7 +36,7 @@ fun ExpenseItem(
 ) {
     Spacer(modifier = Modifier.height(5.dp))
 
-    Row(modifier = Modifier.fillMaxSize().padding(top = 5.dp, bottom = 5.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
+    Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
 
 
         Column(
@@ -43,22 +44,41 @@ fun ExpenseItem(
             modifier = Modifier.fillMaxSize().weight(0.8f)
                 .border(
                     BorderStroke(1.dp, Gray),
-                    shape = RoundedCornerShape(12.dp),)
+                    shape = RoundedCornerShape(12.dp),).padding(top = 10.dp, bottom = 10.dp)
             , verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = expense.text!!,
+                text = (if (expense.text != null) {
+                    val words = expense.text!!.split(" ")
+                    if (words.size > 3) {
+                        words.take(3).joinToString(" ") + " ..."
+                    } else {
+                        expense.text
+                    }
+                } else {
+                    ""
+                }).toString(),
                 fontWeight = FontWeight.W500,
-                fontSize = 20.sp,
-                modifier = Modifier.padding(start = 10.dp,10.dp),
+                fontSize = 22.sp,
+                modifier = Modifier.padding(start = 10.dp, 10.dp),
                 textAlign = TextAlign.Center
             )
+
             Spacer(modifier = Modifier.height(15.dp))
 
             Text(
-                text = expense.amount!!.toString(),
-                color = Primary,
+                text = (if (expense.amount != null) {
+                    val words = expense.amount!!.split(" ")
+                    if (words.size > 3) {
+                        words.take(3).joinToString(" ") + " ..."
+                    } else {
+                        expense.amount
+                    }
+                } else {
+                    ""
+                }).toString(),
+                color = primaryColor,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 18.sp,
                 textAlign = TextAlign.Center

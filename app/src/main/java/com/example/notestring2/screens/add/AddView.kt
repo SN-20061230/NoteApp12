@@ -55,40 +55,34 @@ fun AddView(vm: AddViewModel, navController: NavController) {
         })
         Column(Modifier.padding(horizontal = 12.dp)) {
             OutlinedTextField(
-                value = text,
-                shape = RoundedCornerShape(12.dp),
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White,
-                    focusedIndicatorColor = primaryColor,
-                    unfocusedIndicatorColor = Gray,
-                    cursorColor = Primary
-                ),
+                modifier = Modifier.fillMaxWidth().padding(start = 5.dp, end = 5.dp,top = 10.dp),
                 onValueChange = { vm.updateText(it) },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                placeholder = { Text(text = "Mavzu kiriting", color = Gray) },
+                value = if (text == "") "" else text,
+                label = { Text("Nomi",    color = Color(168,175,185))},
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text,
+                ),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = primaryColor,
+                ),
+                shape = RoundedCornerShape(12.dp),
+                placeholder = { Text(text = "Nomini kiriting", color = Gray) },
                 leadingIcon = {
                     Icon(Icons.Rounded.Edit, contentDescription = null, tint = Gray)
-                }
+                },
             )
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedTextField(
+                modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
                 value = if (amount == "") "" else amount,
-                shape = RoundedCornerShape(12.dp),
-                colors = TextFieldDefaults.colors(
-                    unfocusedIndicatorColor = Gray,
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White,
-                    focusedIndicatorColor = primaryColor,
-                    cursorColor = Primary
+                onValueChange = {vm.updateAmount(it) },
+                label = { Text("Izoh",    color = Color(168,175,185))},
+                placeholder = { Text(text = "Izohni kiriting", color = Gray) },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text,
                 ),
-                onValueChange = { vm.updateAmount(it) },
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                singleLine = true,
-                placeholder = { Text(text = "Ma'lumot kiriting", color = Gray) },
+                shape = RoundedCornerShape(12.dp),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = primaryColor,
+                ),
                 leadingIcon = {
                     Icon(Icons.Rounded.Done, contentDescription = null, tint = Gray)
                 }

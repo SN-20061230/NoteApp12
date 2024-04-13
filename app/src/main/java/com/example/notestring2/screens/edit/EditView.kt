@@ -27,6 +27,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -49,53 +50,41 @@ fun EditView(vm: EditViewModel, navController: NavController) {
     ) {
         CenterAlignedTopAppBar(title = { Text(text = "Tahrirlash") }, navigationIcon = {
             IconButton(onClick = {
-
                 navController.popBackStack()
-
             }) {
                 Icon(Icons.Rounded.ArrowBack, contentDescription = "")
             }
         })
         Column(Modifier.padding(horizontal = 12.dp)) {
             OutlinedTextField(
-                value = text1,
-                shape = RoundedCornerShape(12.dp),
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White,
-                    focusedIndicatorColor = primaryColor,
-                    unfocusedIndicatorColor = Gray,
-                    cursorColor = Primary
-                ),
+                modifier = Modifier.fillMaxWidth().padding(start = 5.dp, end = 5.dp,top = 10.dp),
                 onValueChange = { vm.updateText(it) },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                placeholder = { Text(text = "Nom kiriting", color = Gray) },
+                value = if (text1 == "") "" else text1,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text,
+                ),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = primaryColor,
+                ),
+                shape = RoundedCornerShape(12.dp),
+                placeholder = { Text(text = "Nomini kiriting", color = Gray) },
                 leadingIcon = {
                     Icon(Icons.Rounded.Edit, contentDescription = null, tint = Gray)
-
-                }
+                },
             )
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedTextField(
-                value = if (amount1 == "") "" else amount1.toString(),
-                shape = RoundedCornerShape(12.dp),
-                colors = TextFieldDefaults.colors(
-                    unfocusedIndicatorColor = Gray,
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White,
-                    focusedIndicatorColor = primaryColor,
-                    cursorColor = Primary
-                ),
-                onValueChange = { vm.updateAmount(it) },
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                singleLine = true,
+                modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
+                value = if (amount1 == "") "" else amount1,
+                onValueChange = {vm.updateAmount(it) },
                 placeholder = { Text(text = "Izohni kiriting", color = Gray) },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text,
+                    ),
+                shape = RoundedCornerShape(12.dp),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = primaryColor,
+                ),
                 leadingIcon = {
                     Icon(Icons.Rounded.Done, contentDescription = null, tint = Gray)
-
                 }
             )
         }
