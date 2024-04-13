@@ -14,6 +14,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,9 +27,13 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
+import androidx.compose.ui.semantics.Role.Companion.Button
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -44,13 +50,13 @@ import com.example.notestring2.ui.theme.secondaryColor
 fun EditView(vm: EditViewModel, navController: NavController) {
     val text1 = vm.text.observeAsState().value!!
     val amount1 = vm.amount.observeAsState().value!!
-
+    var isOpen = remember { mutableStateOf(false) }
 
     Column(
         Modifier
             .fillMaxSize().background(primarybackground), verticalArrangement = Arrangement.SpaceBetween
     ) {
-        CenterAlignedTopAppBar(title = { Text(text = "Tahrirlash") }, navigationIcon = {
+        CenterAlignedTopAppBar(title = { Text(text = "Tahrirlash",  fontWeight = FontWeight.SemiBold)}, navigationIcon = {
             IconButton(onClick = {
                 navController.popBackStack()
             }) {
@@ -92,7 +98,10 @@ fun EditView(vm: EditViewModel, navController: NavController) {
         }
         TextButton(
             enabled = if (vm.id == -1) amount1.isNotBlank() && text1.isNotBlank() else vm.expense.amount != amount1 || vm.expense.text != text1,
-            onClick = { vm.onAddUpdate(ExpenseEntity(text = text1, amount = amount1)) },
+            onClick = {
+//                vm.onAddUpdate(ExpenseEntity(text = text1, amount = amount1))
+                      isOpen.value = true
+                      },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(12.dp),
@@ -104,5 +113,50 @@ fun EditView(vm: EditViewModel, navController: NavController) {
         ) {
             Text(text = "Saqlash", color = Color.White, fontSize = 20.sp)
         }
+    }
+
+
+    if (isOpen.value) {
+        AlertDialog(
+            onDismissRequest = {
+                // Set the dialog to be closed when dismissed
+                isOpen.value = false
+            },
+            // Title of the dialog
+            title = {
+                Text(text = "Tahrirlash")
+            },
+            // Content of the dialog
+            text = {
+                Text(text = "Aniq o'zgartirmoqchimisiz?")
+            },
+            // Confirm button
+            confirmButton = {
+                Button(
+                    onClick = {
+
+                        isOpen.value = false
+                        vm.onAddUpdate(ExpenseEntity(text = text1, amount = amount1))
+                    },
+                    colors = ButtonDefaults.buttonColors(Color.Green)
+
+                ) {
+                    Text(text = "Ha")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = {
+
+                        isOpen.value = false
+                        navController.popBackStack()
+                    },
+                    colors = ButtonDefaults.buttonColors(Color.Red)
+
+                ) {
+                    Text(text = "Yo'q")
+                }
+            }
+        )
     }
 }

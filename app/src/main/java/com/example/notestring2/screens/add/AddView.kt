@@ -28,6 +28,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,15 +41,15 @@ import com.example.notestring2.ui.theme.secondaryColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddView(vm: AddViewModel, navController: NavController) {
-    val text = vm.text.observeAsState().value!!
-    val amount = vm.amount.observeAsState().value!!
+fun AddView(viewmodel: AddViewModel, navController: NavController) {
+    val text = viewmodel.text.observeAsState().value!!
+    val amount = viewmodel.amount.observeAsState().value!!
 
     Column(
         Modifier
             .fillMaxSize().background(primarybackground), verticalArrangement = Arrangement.SpaceBetween
     ) {
-        CenterAlignedTopAppBar(title = { Text(text = "Yangi") }, navigationIcon = {
+        CenterAlignedTopAppBar(title = { Text(text = "Yangi", fontWeight = FontWeight.SemiBold) }, navigationIcon = {
             IconButton(onClick = {
                 navController.popBackStack()
             }) {
@@ -58,7 +59,7 @@ fun AddView(vm: AddViewModel, navController: NavController) {
         Column(Modifier.padding(horizontal = 12.dp)) {
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth().padding(start = 5.dp, end = 5.dp,top = 10.dp),
-                onValueChange = { vm.updateText(it) },
+                onValueChange = { viewmodel.editText(it) },
                 value = if (text == "") "" else text,
                 label = { Text("Nomi",    color = Color(168,175,185))},
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text,
@@ -76,7 +77,7 @@ fun AddView(vm: AddViewModel, navController: NavController) {
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
                 value = if (amount == "") "" else amount,
-                onValueChange = {vm.updateAmount(it) },
+                onValueChange = {viewmodel.editAmount(it) },
                 label = { Text("Izoh",    color = Color(168,175,185))},
                 placeholder = { Text(text = "Izohni kiriting", color = Gray) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text,
@@ -91,8 +92,8 @@ fun AddView(vm: AddViewModel, navController: NavController) {
             )
         }
         TextButton(
-            enabled = if (vm.id == -1) amount.isNotBlank()  && text.isNotBlank() else vm.expense.amount != amount || vm.expense.text != text,
-            onClick = { vm.onAdd(ExpenseEntity(text = text, amount = amount)) },
+            enabled = if (viewmodel.id == -1) amount.isNotBlank()  && text.isNotBlank() else viewmodel.expense.amount != amount || viewmodel.expense.text != text,
+            onClick = { viewmodel.Add(ExpenseEntity(text = text, amount = amount)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(12.dp),
