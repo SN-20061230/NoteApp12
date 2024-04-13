@@ -1,5 +1,6 @@
 package com.example.notestring.screens.add
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -34,6 +35,7 @@ import androidx.navigation.NavController
 import com.example.notestring2.database.ExpenseEntity
 import com.example.notestring2.ui.theme.Primary
 import com.example.notestring2.ui.theme.primaryColor
+import com.example.notestring2.ui.theme.primarybackground
 import com.example.notestring2.ui.theme.secondaryColor
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,7 +46,7 @@ fun AddView(vm: AddViewModel, navController: NavController) {
 
     Column(
         Modifier
-            .fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween
+            .fillMaxSize().background(primarybackground), verticalArrangement = Arrangement.SpaceBetween
     ) {
         CenterAlignedTopAppBar(title = { Text(text = "Yangi") }, navigationIcon = {
             IconButton(onClick = {

@@ -1,5 +1,6 @@
 package com.example.notestring.screens.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,6 +33,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.notestring.item.ExpenseItem
 import com.example.notestring2.ui.theme.primaryColor
+import com.example.notestring2.ui.theme.primarybackground
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,7 +41,7 @@ fun HomeView(vm : HomeViewModel, navController: NavController) {
     vm.loadList()
     val list = vm.list.observeAsState().value
 
-    Column(Modifier.fillMaxSize()) {
+    Column(Modifier.fillMaxSize().background(primarybackground)) {
         CenterAlignedTopAppBar(title = { Text(text = "Bosh Sahifa", fontWeight = FontWeight.SemiBold) })
         if(list!!.isEmpty()){
             EmptyIcon()

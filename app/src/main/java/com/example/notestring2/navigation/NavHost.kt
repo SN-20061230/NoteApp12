@@ -18,6 +18,7 @@ import com.example.notestring.screens.home.HomeModel
 import com.example.notestring.screens.home.HomeView
 import com.example.notestring.screens.home.HomeViewModel
 import com.example.notestring2.database.AppDataBase
+import com.example.notestring2.screens.SplashScreen
 
 @Composable
 fun AppNavHost(
@@ -31,7 +32,7 @@ fun AppNavHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = Screens.HomeView.route
+        startDestination = Screens.SplashScreen.route
     ) {
 
         val hm = HomeModel(appDao)
@@ -58,6 +59,11 @@ fun AppNavHost(
             val id = it.arguments?.getInt("id")!!
             val avm1 = AddViewModel(navController, id, edit1)
             AddView(avm1, navController)
+        }
+
+
+        composable(Screens.SplashScreen.route) {
+            SplashScreen(navController)
         }
     }
 }
