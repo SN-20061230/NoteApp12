@@ -5,52 +5,54 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import com.example.notestring2.database.ExpenseEntity
 
-class EditViewModel (private val navController: NavController,
-                     val id: Int,
-                     private val model: EditModel)   {
+class EditViewModel (private val navController: NavController, val id: Int, private val model: EditModel)  {
 
-        private val _text = MutableLiveData("")
-        val text: LiveData<String> = _text
+        private val _title = MutableLiveData("")
+        val title: LiveData<String> = _title
 
-        private val _amount = MutableLiveData("")
-        val amount: LiveData<String> = _amount
+        private val _description = MutableLiveData("")
+        val description: LiveData<String> = _description
 
-        var expense = ExpenseEntity()
+        var note = ExpenseEntity()
 
 
         init {
-            if (id != -1) loadExpense()
+            if (id != -1) getNotes()
         }
 
-
-        private fun loadExpense() {
-            val ex = model.getExpense(id)
-            _text.value = ex.text
-            _amount.value = ex.amount
-            expense = ex
+        private fun getNotes() {
+            val n = model.getNote(id)
+            _title.value = n.text
+            _description.value = n.amount
+            note = n
         }
 
-        fun onAddUpdate(expense: ExpenseEntity) {
-            updateExpense()
+        fun update(expense: ExpenseEntity) {
+            updateNote()
             navController.popBackStack()
 
         }
 
 
-        private fun updateExpense() {
-            val newText = text.value
-            val newAmount = amount.value
-            val ex = ExpenseEntity(expense.id, expense.key, newText, newAmount)
-            model.update(ex)
+        private fun updateNote() {
+            val newText = title.value
+            val newAmount = description.value
+            val n = ExpenseEntity(note.id, note.key, newText, newAmount)
+            model.edit(n)
         }
 
-        fun updateText(newText: String) {
-            _text.value = newText
+        fun updateText(newTitle: String) {
+            _title.value = newTitle
         }
 
-        fun updateAmount(newAmount: String) {
-            if (newAmount.isEmpty()) _amount.value = ""
-            else _amount.value = newAmount
+        fun updateAmount(newDescription: String) {
+            if (newDescription.isEmpty()) {
+                _description.value = ""
+            }
+            else{
+                _description.value = newDescription
+
+            }
         }
 
 

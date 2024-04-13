@@ -38,8 +38,8 @@ import com.example.notestring2.ui.theme.primaryColor
 @Composable
 fun NoteItem(
     expense: ExpenseEntity,
-    onDelete: (expense: ExpenseEntity) -> Unit,
-    onUpdate: (id:Int) -> Unit,
+    delete: (expense: ExpenseEntity) -> Unit,
+    update: (id:Int) -> Unit,
 
 ) {
     var isOpen = remember { mutableStateOf(false) }
@@ -55,7 +55,7 @@ fun NoteItem(
                 .border(
                     BorderStroke(1.dp, Gray),
                     shape = RoundedCornerShape(12.dp)).clickable {
-                    onUpdate(expense.id)
+                    update(expense.id)
 
                 }.padding(top = 10.dp, bottom = 10.dp)
             , verticalArrangement = Arrangement.Center,
@@ -102,7 +102,7 @@ fun NoteItem(
         Column( modifier = Modifier.fillMaxSize().weight(0.2f)
             , verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally){
-            IconButton(onClick = { onUpdate(expense.id) }, modifier = Modifier.padding(5.dp).border(
+            IconButton(onClick = { update(expense.id) }, modifier = Modifier.padding(5.dp).border(
                 BorderStroke(1.dp, Gray),
                 shape = RoundedCornerShape(12.dp),)) {
                 Icon(Icons.Rounded.Edit, contentDescription = null, tint = Gray)
@@ -137,7 +137,7 @@ fun NoteItem(
                     onClick = {
 
                         isOpen.value = false
-                        onDelete(expense)
+                        delete(expense)
                     },
                     colors = ButtonDefaults.buttonColors(Color.Green)
 

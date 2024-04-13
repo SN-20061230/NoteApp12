@@ -52,9 +52,9 @@ fun HomeView(viewModel: HomeViewModel, navController: NavController) {
                 items(list.size) {index->
                     NoteItem(
                         expense = list[index],
-                        onDelete = {viewModel.delete(list[index])
+                        delete = {viewModel.delete(list[index])
                         },
-                        onUpdate = {viewModel.onUpdate(list[index])}
+                        update = {viewModel.update(list[index])}
                     )
                 }
             }

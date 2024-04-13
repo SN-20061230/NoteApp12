@@ -47,9 +47,9 @@ import com.example.notestring2.ui.theme.secondaryColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditView(vm: EditViewModel, navController: NavController) {
-    val text1 = vm.text.observeAsState().value!!
-    val amount1 = vm.amount.observeAsState().value!!
+fun EditView(viewModel: EditViewModel, navController: NavController) {
+    val text1 = viewModel.title.observeAsState().value!!
+    val amount1 = viewModel.description.observeAsState().value!!
     var isOpen = remember { mutableStateOf(false) }
 
     Column(
@@ -66,7 +66,7 @@ fun EditView(vm: EditViewModel, navController: NavController) {
         Column(Modifier.padding(horizontal = 12.dp)) {
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth().padding(start = 5.dp, end = 5.dp,top = 10.dp),
-                onValueChange = { vm.updateText(it) },
+                onValueChange = { viewModel.updateText(it) },
                 value = if (text1 == "") "" else text1,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text,
                 ),
@@ -81,9 +81,9 @@ fun EditView(vm: EditViewModel, navController: NavController) {
             )
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedTextField(
-                modifier = Modifier.fillMaxWidth().padding(start = 5.dp, end = 5.dp,top = 10.dp),
+                modifier = Modifier.fillMaxWidth().padding(start = 5.dp, end = 5.dp, top = 10.dp),
                 value = if (amount1 == "") "" else amount1,
-                onValueChange = {vm.updateAmount(it) },
+                onValueChange = {viewModel.updateAmount(it) },
                 placeholder = { Text(text = "Izohni kiriting", color = Gray) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text,
                     ),
@@ -97,9 +97,14 @@ fun EditView(vm: EditViewModel, navController: NavController) {
             )
         }
         TextButton(
-            enabled = if (vm.id == -1) amount1.isNotBlank() && text1.isNotBlank() else vm.expense.amount != amount1 || vm.expense.text != text1,
+            enabled = if (viewModel.id == -1) {
+                amount1.isNotBlank() && text1.isNotBlank()
+            }
+            else {
+                viewModel.note.amount != amount1 || viewModel.note.text != text1
+
+            },
             onClick = {
-//                vm.onAddUpdate(ExpenseEntity(text = text1, amount = amount1))
                       isOpen.value = true
                       },
             modifier = Modifier
@@ -136,7 +141,7 @@ fun EditView(vm: EditViewModel, navController: NavController) {
                     onClick = {
 
                         isOpen.value = false
-                        vm.onAddUpdate(ExpenseEntity(text = text1, amount = amount1))
+                        viewModel.update(ExpenseEntity(text = text1, amount = amount1))
                     },
                     colors = ButtonDefaults.buttonColors(Color.Green)
 

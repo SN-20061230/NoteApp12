@@ -6,28 +6,28 @@ import androidx.navigation.NavController
 import com.example.notestring2.database.ExpenseEntity
 
 class AddViewModel(private val navController: NavController,val id: Int, private val model: AddModel) {
-    private val _text = MutableLiveData("")
-    val text: LiveData<String> = _text
+    private val _title = MutableLiveData("")
+    val title: LiveData<String> = _title
 
-    private val _amount = MutableLiveData("")
-    val amount: LiveData<String> = _amount
+    private val _description = MutableLiveData("")
+    val description: LiveData<String> = _description
 
-    var expense = ExpenseEntity()
+    var note = ExpenseEntity()
 
-    fun Add(expense: ExpenseEntity) {
-        model.addExpense(expense)
+    fun add(note: ExpenseEntity) {
+        model.addNote(note)
         navController.popBackStack()
     }
-    fun editText(newText: String) {
-        _text.value = newText
+    fun editText(newTitle: String) {
+        _title.value = newTitle
     }
 
-    fun editAmount(newAmount: String) {
-        if (newAmount.isEmpty()){
-            _amount.value = ""
+    fun editAmount(newDescription: String) {
+        if (newDescription.isEmpty()){
+            _description.value = ""
         }
         else {
-            _amount.value = newAmount
+            _description.value = newDescription
         }
     }
 }

@@ -6,10 +6,10 @@ import com.example.notestring2.database.ExpenseEntity
 
 class EditModel(private val appDao : ExpanseDao) {
 
-    fun getExpense(id:Int): ExpenseEntity {
-        return appDao.getExpense(id)
+    fun getNote(id:Int): ExpenseEntity {
+        return appDao.getNote(id)
     }
-    fun update(expense: ExpenseEntity) {
-        appDao.updateExpense(expense)
+    fun edit(expense: ExpenseEntity) {
+        appDao.editNote(expense)
     }
 }

@@ -26,19 +26,19 @@ data class ExpenseEntity(
 @Dao
 interface ExpanseDao{
     @Query("select * from ExpenseEntity where id = :expenseId")
-    fun getExpense(expenseId:Int):ExpenseEntity
+    fun getNote(expenseId:Int):ExpenseEntity
 
     @Insert
-    fun addExpense(expense: ExpenseEntity)
+    fun addNote(expense: ExpenseEntity)
 
     @Update
-    fun updateExpense(expense: ExpenseEntity)
+    fun editNote(expense: ExpenseEntity)
 
     @Delete
-    fun deleteExpense(expense: ExpenseEntity)
+    fun deleteNote(expense: ExpenseEntity)
 
     @Query("select * from ExpenseEntity")
-    fun getAllExpenses(): List<ExpenseEntity>
+    fun getAllNotes(): List<ExpenseEntity>
 
 //    @Query("select * from ExpenseEntity order by date")
 //    fun sortByDate():List<ExpenseEntity>

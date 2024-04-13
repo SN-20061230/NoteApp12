@@ -10,7 +10,7 @@ class HomeViewModel(private val navController: NavController, private val homeMo
     var list: LiveData<List<ExpenseEntity>> = _list
 
     fun getFullList() {
-        _list.value = homeModel.getAllExpense()
+        _list.value = homeModel.getAllNotes()
     }
 
     fun onAdd() {
@@ -18,13 +18,13 @@ class HomeViewModel(private val navController: NavController, private val homeMo
         navController.navigate("add_screen/$id")
     }
 
-    fun delete(expenseEntity: ExpenseEntity) {
-        homeModel.onDelete(expenseEntity)
+    fun delete(noteEntity: ExpenseEntity) {
+        homeModel.delete(noteEntity)
         getFullList()
     }
 
-    fun onUpdate(expenseEntity: ExpenseEntity) {
-        navController.navigate("edit_screen/${expenseEntity.id}")
+    fun update(noteEntity: ExpenseEntity) {
+        navController.navigate("edit_screen/${noteEntity.id}")
     }
 
 

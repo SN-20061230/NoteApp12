@@ -42,8 +42,8 @@ import com.example.notestring2.ui.theme.secondaryColor
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddView(viewmodel: AddViewModel, navController: NavController) {
-    val text = viewmodel.text.observeAsState().value!!
-    val amount = viewmodel.amount.observeAsState().value!!
+    val text = viewmodel.title.observeAsState().value!!
+    val amount = viewmodel.description.observeAsState().value!!
 
     Column(
         Modifier
@@ -92,8 +92,15 @@ fun AddView(viewmodel: AddViewModel, navController: NavController) {
             )
         }
         TextButton(
-            enabled = if (viewmodel.id == -1) amount.isNotBlank()  && text.isNotBlank() else viewmodel.expense.amount != amount || viewmodel.expense.text != text,
-            onClick = { viewmodel.Add(ExpenseEntity(text = text, amount = amount)) },
+            enabled = if (viewmodel.id == -1){
+                amount.isNotBlank()  && text.isNotBlank()
+            }
+
+            else {
+                viewmodel.note.amount != amount || viewmodel.note.text != text
+
+            },
+            onClick = { viewmodel.add(ExpenseEntity(text = text, amount = amount)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(12.dp),
